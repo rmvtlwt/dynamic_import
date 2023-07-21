@@ -7,11 +7,11 @@ for await (const conn of server) {
 async function serveHttp(conn: Deno.Conn): Promise<void> {
   const httpConn = Deno.serveHttp(conn);
   for await (const requestEvent of httpConn) {
-    for await (const eventFile of Deno.readDir(Deno.cwd() + "/events")) {
-      const event = await import(`./events/` + eventFile.name);
-      console.log(event);
+    for await (const Island of Deno.readDir(Deno.cwd() + "/islands")) {
+      const island = await import(`./islands/` + Island.name);
+      console.log(island);
       requestEvent.respondWith(
-        event.response
+        island.response
       )
     }
   }
